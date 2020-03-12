@@ -14,6 +14,13 @@ class ProjectHelper:
         wd.find_element_by_xpath("//input[@value='Add Project']").click()
         self.return_to_all_project_page()
 
+    def delete_project(self, project):
+        wd = self.app.wd
+        self.open_manage_page()
+        wd.find_element_by_partial_link_text("{}".format(project.name)).click()
+        wd.find_element_by_xpath("//input[@value='Delete Project']").click()
+        wd.find_element_by_xpath("//input[@value='Delete Project']").click()
+
     def open_manage_page(self):
         wd = self.app.wd
         if not (wd.current_url.endswith("/manage_overview_page.php") and len(wd.find_elements_by_name("Manage")) > 0):
@@ -25,7 +32,6 @@ class ProjectHelper:
         self.app.set_textbox_value("name", project.name)
         self.app.select_combobox_value("status", project.status)
         if project.inheritment:
-            # TODO: Добавить клик на чекбокс
             wd.find_element_by_name("inherit_global").click()
         self.app.select_combobox_value("view_state", project.view_status)
         self.app.set_textbox_value("description", project.description)
@@ -38,16 +44,8 @@ class ProjectHelper:
         print("Выполняется получение списка проектов из интерфейса")
         wd = self.app.wd
         self.open_manage_page()
-        s1 = wd.find_elements_by_partial_link_text("first")
-        #table.width100: nth - child(6) css selector
-        '''
-        all_rows = wd.find_elements_by_xpath("/ html / body / table[3] / tbody / tr")
-        project_list = all_rows[2:]
-        
-        '''
         show_projects = []
         count_service_row = 2
-        debug = len(wd.find_elements_by_xpath("/ html / body / table[3] / tbody / tr")) - count_service_row
         for i in range(len(wd.find_elements_by_xpath("/ html / body / table[3] / tbody / tr")) - count_service_row):
             index = i + count_service_row + 1
             row = wd.find_elements_by_xpath("/ html / body / table[3] / tbody / tr[{}]/td".format(index))

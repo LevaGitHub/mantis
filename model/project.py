@@ -1,5 +1,3 @@
-from sys import maxsize
-
 class Project:
 
     def __init__(self, project_id=None, name=None, status=None, enabled=None, inheritment=None, view_status=None,
@@ -11,6 +9,9 @@ class Project:
         self.inheritment = inheritment   # True\False
         self.view_status = view_status   # public\private
         self.description = description
+
+    def __repr__(self):
+        return "{}:{}".format(self.name, self.description)
 
     def __eq__(self, other):
         return ((self.project_id is None or other.project_id is None or self.project_id == other.project_id)
