@@ -1,5 +1,13 @@
-def test_signup_new_account(app):
-    username = "user112"
-    password = "test"
-    app.james.ensure_user_exists(username, password)
+from fixture.general import generate_sequence
+import string
 
+
+def test_signup_new_account(app):
+    username = "user_{}".format(generate_sequence(10, string.ascii_letters))
+    password = "test"
+    email = username + "@localhost"
+    app.james.ensure_user_exists(username, password)
+    app.signup.new_user(username, email, password)
+    app.open_home_page()
+    assert app.session.is_logged_in_as(username)
+    app.session.logout()
