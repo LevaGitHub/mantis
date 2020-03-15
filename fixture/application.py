@@ -29,7 +29,6 @@ class Application:
         self.mail = MailHelper(self)
         self.project = ProjectHelper(self)
         self.soap = SoapHelper(self)
-
         self.base_url = config['web']['baseUrl']
 
     def is_valid(self):

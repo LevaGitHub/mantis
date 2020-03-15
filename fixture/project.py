@@ -62,3 +62,13 @@ class ProjectHelper:
                                          description=description))
         return show_projects
 
+    def convert_to_project(self, project_data):
+        project_list = []
+        for each in project_data:
+            project_list.append(Project(project_id=each.id,
+                                        name=each.name,
+                                        status=each.status.name,
+                                        enabled=each.status,
+                                        view_status=each.view_state.name,
+                                        description=each.description))
+        return project_list

@@ -27,10 +27,10 @@ def config(request):
 def app(request, config):
     global fixture
     browser = request.config.getoption("--browser")
-   # auth_config = config['webadmin']
+    auth_config = config['webadmin']
     if fixture is None or not fixture.is_valid():
         fixture = Application(browser=browser, config=config)
-    #fixture.session.login(username=auth_config["username"], password=auth_config["password"])
+    fixture.session.login(username=auth_config["username"], password=auth_config["password"])
     return fixture
 
 
