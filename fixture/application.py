@@ -4,6 +4,7 @@ from fixture.project import ProjectHelper
 from fixture.james import JamesHelper
 from fixture.signup import SignupHelper
 from fixture.mail import MailHelper
+from fixture.soap import SoapHelper
 from selenium.webdriver.support.ui import Select
 
 waiting_time = 1
@@ -27,6 +28,7 @@ class Application:
         self.signup = SignupHelper(self)
         self.mail = MailHelper(self)
         self.project = ProjectHelper(self)
+        self.soap = SoapHelper(self)
 
         self.base_url = config['web']['baseUrl']
 
