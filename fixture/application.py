@@ -1,6 +1,7 @@
 from selenium import webdriver
 from fixture.session import SessionHelper
 from fixture.project import ProjectHelper
+from fixture.james import JamesHelper
 from selenium.webdriver.support.ui import Select
 
 waiting_time = 1
@@ -8,7 +9,7 @@ waiting_time = 1
 
 class Application:
 
-    def __init__(self, browser, base_ulr):
+    def __init__(self, browser, config):
         if browser == 'firefox':
             self.wd = webdriver.Firefox()
         elif browser == 'chrome':
@@ -19,8 +20,11 @@ class Application:
             raise ValueError("Unrecognized browser %s" % browser)
         self.wd.implicitly_wait(waiting_time)
         self.session = SessionHelper(self)
+        self.james = JamesHelper(self)
+        self.config = config
         self.project = ProjectHelper(self)
-        self.base_ulr = base_ulr
+
+        self.base_url = config['web']['baseUrl']
 
     def is_valid(self):
         try:
@@ -31,7 +35,7 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        wd.get(self.base_ulr)
+        wd.get(self.base_url)
 
     def destroy(self):
         self.wd.quit()
